@@ -1,0 +1,87 @@
+*** Aprende SQL con PostgreSQL(DB Relacional)***
+Link: https://www.youtube.com/watch?v=0ORzpdQrnxE
+____________________________________________________________
+____________________________________________________________
+### Bases de datos
+
+# ¿Que es una DB?
+- DB: data base o base de datos
+- Una base de datos es un conjuntos de datos pertenecientes
+a un mismo contexto y almacenados sistematicamente para su
+posterior uso.
+- Resumen: Guardar y leer datos pero de forma ordenada.
+
+# Tipos de bases de datos
+- Bases de datos relacionales
+- Bases de datos NoSQL
+- Bases de datos orientadas a objetos
+- Bases de datos distribuidas
+- etc
+------------------------------------------------------------
+# Bases de datos relacionales
+- Las bases de datos relaciones se basan en el modelo
+relacional.
+- Una forma intuitiva y directa de representar datos en
+tablas.
+- Cada tabla utiliza filas y columnas.
+
+# Bases de datos no relacionales
+- noSQL: La informacion se organiza normalmente mediante.
+documentos y es muy util cuando no tenemos un esquema 
+exacto de lo que se va a almacenar.
+
+### DBMS
+- Sistema de gestor de base de datos(Database Management 
+System).
+- Resumen: Software que nos permite gestionar las bases de
+datos.
+- Administrar, acceder, controlar permisos, respaldas, crear
+informes, etc.
+- Este sistema (DBMS) nevesita de alguna manera consultar
+estos datos y para ello una alternativa es utilizar SQL.
+
+### SQL
+- SQL (Structured Query Language): lenguaje de consulta
+estructurada, diseñado para administrar, y recuperar
+información de sistemas de gestión de bases de datos
+relacionales.
+- si un DBMS utiliza SQL seria "Un sistema de gestion de
+bases de datos relaciones" (RDBMS, por sus siglas en ingles)
+- SQL es el lenguaje mas comun para realizar consultas en
+bases de datos.
+
+### Conclusion
+- En RDBMS (Software) crear y administrar las bases de
+datos, utilizando SQL para las consultas.
+------------------------------------------------------------
+### RDBMS populares
+- Oracle
+- MySQL
+- Microsoft SQL Server
+- PostgreSQL
+- IBM Db2
+- SQLite
+- Microsoft Access
+- MariaDB
+------------------------------------------------------------
+### PostgreSQL: postgresql.org
+- PostgreSQL, tambien llamado Postgres, es un sistema de
+gestion de bases de datos relacional orientado a objetos y
+de codigo abierto, publicanod bajo la licencia PostegreSQL,
+similar a la BSD o la MIT.
+
+- Como muchos otros proyectos de codigo abierto, el 
+desarrollo de PostgreSQL no es manejado por una empresa o
+persona, sino que es dirigido por una comunidad de 
+desarrolladores que trabajan de forma desinteresada, 
+altruista, libre o apoyados por organizaciones comerciales.
+Dicha comunidad es denominada el PGFD (PostgreSQL Global
+Development Group).
+------------------------------------------------------------
+- Existen dos maneras de trabajar, unas es con SQL Shell y
+la otra es a traves de pgAdmin 4, esta ultima nos permite
+hacer todo de manera visual.
+
+- Comandos de navegacion en SQL Shell
+
+6:41
