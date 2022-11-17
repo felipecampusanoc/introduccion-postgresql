@@ -82,6 +82,78 @@ Development Group).
 la otra es a traves de pgAdmin 4, esta ultima nos permite
 hacer todo de manera visual.
 
-- Comandos de navegacion en SQL Shell
+>>> Terminal: SQL Shell(psql)
+\l = Ver todas las bases de datos
+CREATE DATABASE prueba;
 
-6:41
+>>> Interfaz gráfico(GUI): PgAdmin4
+------------------------------------------------------------
+- Querys
+- Diagrama entidad relación
+------------------------------------------------------------
+****** MANUAL: https://www.postgresql.org/docs/15/index.html
+****** Ejemplo:
+------------------------------------------------------------
+SERIAL: Es un tipo de dato especial de postgresql que
+es la id autoincrementable.
+
+>>> CREAR BASE DE DATOS Y TABLAS
+
+create database prueba;
+
+CREATE TABLE usuarios(
+	nombre VARCHAR(100) NOT NULL,
+	edad INT,
+	descripcion TEXT,
+	id_usuario SERIAL,
+	PRIMARY KEY (id_usuario)
+);
+
+SELECT * FROM usuarios;
+
+CREATE TABLE tareas(
+	id_tarea SERIAL PRIMARY KEY,
+	id_usuario INT NOT NULL,
+	titulo VARCHAR(50) NOT NULL,
+	fecha DATE DEFAULT CURRENT_DATE,
+	estado BOOLEAN DEFAULT false,
+	id_usuario int,
+	FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
+);
+
+SELECT * FROM tareas;
+------------------------------------------------------------
+>>> AGREGAR UN ATRIBUTO A LA TABLA:
+ALTER TABLE tareas
+ADD descripcion TEXT;
+------------------------------------------------------------
+>>> INSERTAR DATOS EN LA TABLA:
+INSERT INTO usuarios(nombre, edad, descripcion)
+VALUES(
+	'Alex',
+	50,
+	'Le gusta la musica',
+);
+
+SELECT * FROM usuarios;
+------------------------------------------------------------
+>>> ACTUALIZAR DATOS DE UNA TABLA:
+UPDATE usuarios
+	SET nombre = 'felipe', edad = 60, descripcion = 'Le gusta jojo'
+	WHERE id_usuario = 1;
+	
+SELECT * FROM usuarios;
+------------------------------------------------------------
+>>> ELIMINAR DATOS DE UNA TABLA:
+DELETE FROM usuarios
+WHERE id_usuario = 1;
+
+SELECT * FROM usuarios;
+------------------------------------------------------------
+GENERAR ERD = Clic derecho en la base de datos y seleccionar
+		generar ERD
+DELETE FROM usuarios
+WHERE id_usuario = 1;
+------------------------------------------------------------
+
+SEGUNDA PARE
