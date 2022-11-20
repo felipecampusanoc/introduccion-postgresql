@@ -1,5 +1,5 @@
-*** Aprende SQL con PostgreSQL(DB Relacional)***
-Link: https://www.youtube.com/watch?v=0ORzpdQrnxE
+*** Aprende SQL con PostgreSQL(DB Relacional) - Bluuweb ***
+Enlace: https://www.youtube.com/watch?v=0ORzpdQrnxE
 ____________________________________________________________
 ____________________________________________________________
 1.- Introducción
