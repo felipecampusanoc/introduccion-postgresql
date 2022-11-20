@@ -349,17 +349,87 @@ CREATE TABLE cliente_ordenes (
 );
 
 CREATE TABLE cliente_ordenes_productos (
-	cliente_orden INT REFERENCES cliente_ordenes(cliente_orden_id),
+	cliente_orden_id INT REFERENCES cliente_ordenes(cliente_orden_id),
 	producto_id INT REFERENCES productos(producto_id),
 	cantidad SMALLINT DEFAULT 1
 );
+------------------------------------------------------------
+SELECT * FROM clientes;
+SELECT * FROM productos;
 
+INSERT INTO cliente_ordenes(cliente_id)
+VALUES(3);
+
+SELECT * FROM cliente_ordenes;
+
+INSERT INTO
+cliente_ordenes_productos(cliente_orden_id, producto_id, cantidad)
+VALUES( 1, 11, 2);
+
+*** DESCONTAR PRODUCTOS ***
 UPDATE productos
-SET productos.producto_stock = productos.producto_stock - 2
-WHERE productos.producto_id = 11;
+SET producto_stock = producto_stock - 2
+WHERE producto_id = 11;
 
 SELECT * FROM cliente_ordenes_productos;
+------------------------------------------------------------
+- La unión o join de PostgreSQL se utiliza para combinar
+columnas de una o mas tablas, en funcion de los valores de
+las columnas comunes entre tablas relacionadas.
+- Existen diferentes tipos de join:
 
-____________________________________________________________
-____________________________________________________________
-                                                                                                                                                    
+> INNER JOIN o JOIN
+> LEFT JOIN
+> FULL JOIN o FULL OUTER JOIN
+> y otros.
+------------------------------------------------------------
+SELECT * 
+FROM productos AS p
+JOIN cliente_ordenes_productos AS cop
+ON p.producto_id = cop.producto_id;
+
+SELECT
+	p.producto_nombre,
+	cop.cantidad,
+	cop.cantidad * p.producto_precio AS "total por producto"
+FROM productos AS p
+JOIN cliente_ordenes_productos AS cop
+ON p.producto_id = cop.producto_id;
+
+SELECT
+	SUM(cop.cantidad * p.producto_precio) AS "total a pagar"
+FROM productos AS p
+JOIN cliente_ordenes_productos AS cop
+ON p.producto_id = cop.producto_id;
+------------------------------------------------------------
+4.- Normalización en bases de datos(1FN, 2FB, 3FN)
+- La normalización es el proceso de seguir una serie de reglas
+(formas normales), para asegurar que nuestras relaciones
+estén ordenadas y regularizadas con el fin de mejorar dichas
+relaciones.
+- Están enfocadas en evitar la redundancia de datos e 
+inconsistencias en el diseño de nuestras tablas.
+
+¿Por qué normalizar?
+- Evitar redundancia de datos
+- Proteger la integridad de los datos
+- Evitar problemas de actualización
+
+¿Como normalizar una DB?
+- Se siguen en un proceso ordenado las formas normales (FN).
+- Por ende partimos con 1FN, 2FN... hasta las 6FN.
+- Lo tradicional es llegar hasta las 3FN.
+
+1FN (primera forma normal)
+- Cada campo o atributo deben ser atomicos, es decir debe
+contener un unico valor.
+- No pueden haber grupo repetitivos.
+- Existir una llave primaria.
+
+Solución 1
+- Todos los datos son atomicos
+- Pero telefono 1 y telefono 2 es un grupo repetitivo, esto
+genera:
+-- Perdida de especio de memoria.
+-- Limitar a solo dos telefonos nuestra DB.
+                                                                                                                                
