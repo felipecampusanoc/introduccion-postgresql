@@ -2,6 +2,8 @@
 Link: https://www.youtube.com/watch?v=0ORzpdQrnxE
 ____________________________________________________________
 ____________________________________________________________
+1.- Introducción
+
 ### Bases de datos
 
 # ¿Que es una DB?
@@ -93,7 +95,10 @@ CREATE DATABASE prueba;
 ------------------------------------------------------------
 ****** MANUAL: https://www.postgresql.org/docs/15/index.html
 ****** Ejemplo:
-------------------------------------------------------------
+____________________________________________________________
+____________________________________________________________
+2.- SELECT 
+
 SERIAL: Es un tipo de dato especial de postgresql que
 es la id autoincrementable.
 
@@ -155,5 +160,206 @@ GENERAR ERD = Clic derecho en la base de datos y seleccionar
 DELETE FROM usuarios
 WHERE id_usuario = 1;
 ------------------------------------------------------------
+>>> PostegreSQL SELECT
+- SELECT
+-- DISTINCT
+-- ORDER BY
+-- WHERE
+-- LIMIT
+-- GROUP BY
+-- HAVING
+-- JOIN
+------------------------------------------------------------
+DROP TABLE IF EXISTS ordenes;
+DROP TABLE IF EXISTS productos;
+DROP TABLE IF EXISTS clientes;
 
-SEGUNDA PARE
+CREATE TABLE clientes (
+	cliente_id SERIAL PRIMARY KEY,
+	cliente_nombre VARCHAR(60)
+);
+
+CREATE TABLE productos (
+	producto_id SERIAL PRIMARY KEY,
+	producto_nombre VARCHAR(80) NOT NULL,
+	producto_precio NUMERIC(6, 2) CHECK(producto_precio >= 0),
+	producto_stock SMALLINT CHECK(producto_stock >= 0) DEFAULT 0,
+	producto_tipo VARCHAR(80)
+);
+
+CREATE TABLE ordenes (
+	orden_id SERIAL PRIMARY KEY,
+	cliente_id INT REFERENCES clientes(cliente_id),
+	producto_id INT REFERENCES productos(producto_id)
+);
+------------------------------------------------------------
+INSERT INTO clientes
+	(cliente_nombre)
+VALUEs
+	('Maria'),
+	('Carmen'),
+	('Josefa'),
+	('Antonio'),
+	('Jose'),
+	('Manuel'),
+	('David'),
+	('Daniel');
+
+INSERT INTO productos
+(producto_nombre, producto_precio, producto_stock, producto_tipo)
+VALUES
+	('Latte', 2.50, 100, 'cafe'),
+	('Cappuccino', 1.90, 100, 'cafe'),
+	('Dulce de leche Latte', 20.50, 100, 'cafe'),
+	('Cafe americano', 3.50, 100, 'cafe'),
+	('Iced cafe americano', 8.50, 100, 'cafe'),
+	('Cafe mocha', 50, 100, 'cafe'),
+	('Caramel Macchiato', 3.2, 100, 'cafe'),
+	('Iced Mocha', 2.50, 100, 'cafe'),
+	('Vanilla Latte', 2.50, 100, 'cafe'),
+	('Flat White', 2.50, 100, 'cafe'),
+	('Espresso Macchiato', 0.90, 100, 'cafe'),
+	('Cafe cortado', 3.50, 100, 'cafe'),
+	('Pie de barres', 5.50, 100, 'cafe'),
+	('Espresso con Panna', 1.50, 100, 'cafe'),
+	('Cafe cortado', 3.50, 100, 'cafe'),
+	('Rota cuatro leches', 4.50, 100, 'postre'),
+	('Pue de berries', 5.50, 100, 'postre'),
+	('Bagel', 2.50, 100, 'postre'),
+	('Donut rellena', 6.50, 100, 'donut'),
+	('Scone de 4 quesos', 7.50, 100, 'Sandwich'),
+	('Muffin Zanahoria nuez', 8.50, 100, 'Muffin'),
+	('Media luna', 6.50, 100, 'donut'),
+	('Pan de Queso', 11.50, 100, 'Sandwich'),
+	('Praline Cake', 12.50, 100, 'Sandwich'),
+	('Lemon Cake', 22.50, 100, null),
+	('Muffin con Chips', 33.50, 100, 'Muffin'),
+	('Muffin de Arandano', 454.50, 100, 'Muffin');
+------------------------------------------------------------
+SELECT * FROM productos;
+------------------------------------------------------------
+SELECT 
+	producto_nombre,
+	producto_precio
+FROM productos;
+------------------------------------------------------------
+SELECT
+	producto_nombre || ' EL PRECIO ES DE: ' || producto_precio
+FROM productos;
+------------------------------------------------------------
+SELECT
+	producto_nombre || ' EL PRECIO ES DE: ' || producto_precio
+	AS "nombre y precio",
+	producto_stock * 100 AS "Producto multiplicado por cien"
+FROM productos;
+------------------------------------------------------------
+SELECT 
+	producto_nombre,
+	producto_stock,
+	producto_precio
+FROM productos;
+ORDER BY producto_nombre ASC;
+------------------------------------------------------------
+SELECT 
+	producto_nombre,
+	producto_stock,
+	producto_precio
+FROM productos;
+ORDER BY producto_nombre DESC;
+------------------------------------------------------------
+SELECT
+	producto_nombre,
+	LENGTH (producto_nombre) AS len
+FROM productos
+ORDER BY len DESC;
+------------------------------------------------------------
+SELECT
+	DISTINCT producto_tipo
+FROM productos;
+------------------------------------------------------------
+SELECT
+	producto_nombre,
+	producto_precio,
+	producto_tipo
+FROM productos
+WHERE producto_tipo = 'cafe';
+------------------------------------------------------------
+SELECT
+	producto_nombre,
+	producto_precio,
+	producto_tipo,
+	producto_stock
+FROM productos
+WHERE producto_tipo = 'cafe' AND producto_stock > 0;
+------------------------------------------------------------
+SELECT
+	producto_nombre,
+	producto_precio,
+	producto_tipo,
+	producto_stock
+FROM productos
+WHERE producto_tipo IN ('cafe', 'postre');
+------------------------------------------------------------
+SELECT
+	producto_nombre,
+	producto_precio,
+	producto_tipo,
+	producto_stock
+FROM productos
+WHERE producto_tipo NOT IN ('cafe', 'postre');
+------------------------------------------------------------
+SELECT
+	producto_nombre,
+	producto_precio,
+	producto_tipo,
+	producto_stock
+FROM productos
+WHERE producto_nombre LIKE 'Cafe%';
+
+Select producto_nombre from productos;
+------------------------------------------------------------
+SELECT
+	producto_nombre,
+	producto_precio
+FROM productos
+WHERE producto_precio BETWEEN 1 AND 4
+LIMIT 3;
+------------------------------------------------------------
+SELECT
+	producto_nombre,
+	producto_precio,
+	producto_tipo
+FROM productos
+WHERE producto_tipo IS NULL;
+------------------------------------------------------------
+SELECT
+	producto_tipo,
+	COUNT(producto_nombre) AS "cantidad de productos"
+FROM productos
+GROUP BY producto_tipo
+HAVING COUNT(producto_nombre) > 2;
+____________________________________________________________
+____________________________________________________________
+3.-  JOIN
+
+CREATE TABLE cliente_ordenes (
+	cliente_orden_id SERIAL PRIMARY KEY,
+	cliente_id INT REFERENCES cleintes(cliente_id),
+	orden_fecha DATE DEFAULT  NOW()
+);
+
+CREATE TABLE cliente_ordenes_productos (
+	cliente_orden INT REFERENCES cliente_ordenes(cliente_orden_id),
+	producto_id INT REFERENCES productos(producto_id),
+	cantidad SMALLINT DEFAULT 1
+);
+
+UPDATE productos
+SET productos.producto_stock = productos.producto_stock - 2
+WHERE productos.producto_id = 11;
+
+SELECT * FROM cliente_ordenes_productos;
+
+____________________________________________________________
+____________________________________________________________
+                                                                                                                                                    
